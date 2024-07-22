@@ -15,6 +15,7 @@ $(document).ready(function () {
                     }
                 });
                 d = data || []; // Adjust this based on the actual structure of your response
+                $("#timer").hide();
                 renderData();
                 renderPagination();
             },
@@ -58,6 +59,7 @@ $(document).ready(function () {
         }
     }
     $(document).on("click", ".data-block", function () {
+        $("#timer").show();
         var category = $(this).data("category");
 
         var question = d.find(function (item) {
@@ -70,23 +72,45 @@ $(document).ready(function () {
             question.incorrectAnswers.push(question.correctAnswer);
 
             $("#data-container").html(`
-                        
+                         
                         <div class="question-block"> ${question.question}</div>
-                        ${$.each(
-                            question.incorrectAnswers,
-                            function (index, answer) {
-                                `<div class="answer" >
-                        <h3>${answer[index]}</h3>
+                       <div class="answer-block"> ${$.each(
+                           question.incorrectAnswers,
+                           function (index, answer) {
+                               `<div class="answer" >
+                        <h3>${answer}</h3>
                         
                     </div>`;
-                            }
-                        )}
+                           }
+                       )}</div>
                     `);
             $("#pagination").remove();
         } else {
             console.log("No question found for category:", category);
         }
     });
+    var timerDuration = 60; // 60 seconds
+    var timerDisplay = $("#timer");
+    startTimer(timerDuration, timerDisplay);
+    function startTimer(duration, display) {
+        var timer = duration,
+            minutes,
+            seconds;
+        var interval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.text(minutes + ":" + seconds);
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                display.text("Time's up!");
+            }
+        }, 1000);
+    }
 
     // Fetch data when the document is ready
     fetchData();

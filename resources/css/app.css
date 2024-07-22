@@ -95,10 +95,22 @@ html {
     font-weight: bold;
     font-size:12px;
 }
+.pagination .dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination .dot.active {
+    background-color: #007bff;
+}
  .question-block {
      border: 1px solid #ddd;
      padding: 15px;
-     margin-bottom: 10px;
+     
      border-radius: 5px;
  }
 
@@ -114,4 +126,10 @@ html {
      margin: 5px;
      border-radius: 3px;
      width: 200px;
+ }
+ .timer {
+     font-size: 2em;
+     font-weight: bold;
+     text-align: center;
+     margin-top: 20px;
  }
